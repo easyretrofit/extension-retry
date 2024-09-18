@@ -37,12 +37,11 @@ public class Retry implements Interceptor {
             } catch (Exception e) {
                 if (this.shouldRetry()) {
                     createMaxRetriesExceededException(this);
-                }
-                // retry on exception
-                if (Objects.requireNonNull(config.getExceptionPredicate()).test(e)) {
+                } else if (Objects.requireNonNull(config.getExceptionPredicate()).test(e)) {
                     retry();
-                }
-                if (Arrays.stream(config.getIgnoreExceptions()).anyMatch(x -> x.isInstance(e))) {
+                } else if (Arrays.stream(config.getIgnoreExceptions()).anyMatch(x -> x.isInstance(e))) {
+                    throw new RuntimeException(e);
+                } else {
                     throw new RuntimeException(e);
                 }
             }
@@ -61,6 +60,7 @@ public class Retry implements Interceptor {
         this.retryCount--;
         waitDuration();
     }
+
     private void waitDuration() {
         long backoffMs;
         if (config.getBackoffExponentialMultiplier() > RetryConfig.DEFAULT_EXPONENTIAL_BACKOFF_MULTIPLIER) {
