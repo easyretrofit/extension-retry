@@ -15,12 +15,13 @@ public class MaxRetriesExceededException extends RuntimeException {
      */
     public static MaxRetriesExceededException createMaxRetriesExceededException(Retry retry) {
         boolean writeStackTrace = retry.getConfig().isWriteableStackTrace();
+        String resourceName = retry.getConfig().getResourceName();
         String message = String.format(
                 "Retry '%s' has exhausted all attempts (%d)",
-                retry.getResourceName(),
+                retry.getConfig().getResourceName(),
                 retry.getConfig().getMaxRetries()
         );
-        return new MaxRetriesExceededException(retry.getResourceName(), message, writeStackTrace);
+        throw new MaxRetriesExceededException(resourceName, message, writeStackTrace);
     }
 
     /**

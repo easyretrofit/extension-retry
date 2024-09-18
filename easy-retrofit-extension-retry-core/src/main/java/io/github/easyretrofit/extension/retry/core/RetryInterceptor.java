@@ -10,18 +10,17 @@ import java.util.concurrent.TimeoutException;
 
 public class RetryInterceptor extends BaseInterceptor {
 
+
+    private final RetrofitRetryContext retryContext;
+
+    public RetryInterceptor(RetrofitRetryContext retryContext) {
+        this.retryContext = retryContext;
+    }
+
     @Override
     protected Response executeIntercept(Chain chain) throws IOException {
-        RetryConfig.Builder builder = RetryConfig.custom()
-                .maxAttempts(3)
-                .waitDuration(Duration.ofMillis(2000))
-                .retryOnResult(response -> response.code() == 500)
-                .retryExceptions(IOException.class, TimeoutException.class)
-                .retryOnException(throwable -> throwable instanceof IOException)
-                .ignoreExceptions(IllegalArgumentException.class)
-                .backoffMultiplier(2.0);
-        RetryConfig retryConfig = builder.build();
-        return new Retry(retryConfig, "")
+
+        return new Retry(retryContext.getRetryConfig("test"))
                 .intercept(chain);
     }
 

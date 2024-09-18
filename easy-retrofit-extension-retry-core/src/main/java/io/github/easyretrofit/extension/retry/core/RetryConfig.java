@@ -24,7 +24,8 @@ public class RetryConfig {
     @SuppressWarnings("unchecked")
     private Class<? extends Throwable>[] ignoreExceptions = new Class[0];
     private Predicate<Throwable> exceptionPredicate;
-    private boolean writeableStackTrace = false;
+    private boolean writeableStackTrace = true;
+    private String resourceName;
 
     public RetryConfig() {
 
@@ -75,9 +76,12 @@ public class RetryConfig {
         return ignoreExceptions;
     }
 
+    public String getResourceName() {
+        return resourceName;
+    }
+
 
     public static class Builder {
-
         private int maxAttempts = DEFAULT_MAX_ATTEMPTS;
         private Duration waitDuration = Duration.ofMillis(DEFAULT_WAIT_DURATION);
         private double backoffMultiplier = 0.0;
@@ -87,7 +91,8 @@ public class RetryConfig {
         private Class<? extends Throwable>[] retryExceptions = new Class[0];
         @SuppressWarnings("unchecked")
         private Class<? extends Throwable>[] ignoreExceptions = new Class[0];
-        private boolean writeableStackTrace = true;
+        private boolean writeableStackTrace = false;
+        private String resourceName;
 
         public Builder() {
         }
@@ -106,6 +111,7 @@ public class RetryConfig {
             config.ignoreExceptions = ignoreExceptions;
             config.writeableStackTrace = writeableStackTrace;
             config.exceptionPredicate = createExceptionPredicate();
+            config.resourceName = resourceName;
             return config;
         }
 
@@ -177,6 +183,10 @@ public class RetryConfig {
         }
 
 
+        public Builder resourceName(String resourceName) {
+            this.resourceName = resourceName;
+            return this;
+        }
     }
 
 

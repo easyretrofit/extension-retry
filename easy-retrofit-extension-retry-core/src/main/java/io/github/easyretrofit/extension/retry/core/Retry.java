@@ -5,19 +5,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static io.github.easyretrofit.extension.retry.core.MaxRetriesExceededException.createMaxRetriesExceededException;
 
 public class Retry implements Interceptor {
-
-    private final String resourceName;
     private int retryCount;
     private final RetryConfig config;
 
-    public Retry(RetryConfig config, String resourceName) {
+    public Retry(RetryConfig config) {
         this.config = config;
-        this.resourceName = resourceName;
         this.retryCount = config.getMaxRetries();
     }
 
@@ -28,40 +26,41 @@ public class Retry implements Interceptor {
             Response response = null;
             try {
                 response = chain.proceed(request);
-                if (Objects.requireNonNull(config.getRetryOnResultPredicate()).test(response)) {
+                if (config.getRetryOnResultPredicate() != null && config.getRetryOnResultPredicate().test(response)) {
                     if (this.shouldRetry()) {
-                        retry();
-                        continue;
+                        createMaxRetriesExceededException(this);
                     }
+                    retry();
+                    continue;
                 }
                 return response;
-            } catch (IOException e) {
-                if (!this.shouldRetry()) {
+            } catch (Exception e) {
+                if (this.shouldRetry()) {
                     createMaxRetriesExceededException(this);
                 }
-                retry();
+                // retry on exception
+                if (Objects.requireNonNull(config.getExceptionPredicate()).test(e)) {
+                    retry();
+                }
+                if (Arrays.stream(config.getIgnoreExceptions()).anyMatch(x -> x.isInstance(e))) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
-
 
     public RetryConfig getConfig() {
         return config;
     }
 
-    public String getResourceName() {
-        return resourceName;
-    }
-
     private boolean shouldRetry() {
-        return this.retryCount > 0;
+        return this.retryCount <= 0;
     }
 
     private void retry() {
         this.retryCount--;
         waitDuration();
     }
-
     private void waitDuration() {
         long backoffMs;
         if (config.getBackoffExponentialMultiplier() > RetryConfig.DEFAULT_EXPONENTIAL_BACKOFF_MULTIPLIER) {
