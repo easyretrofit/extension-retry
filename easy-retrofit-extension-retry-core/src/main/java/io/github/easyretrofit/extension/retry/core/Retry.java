@@ -23,7 +23,7 @@ public class Retry implements Interceptor {
     public Response intercept(Chain chain) {
         Request request = chain.request();
         while (true) {
-            Response response = null;
+            Response response;
             try {
                 response = chain.proceed(request);
                 if (config.getRetryOnResultPredicate() != null && config.getRetryOnResultPredicate().test(response)) {
