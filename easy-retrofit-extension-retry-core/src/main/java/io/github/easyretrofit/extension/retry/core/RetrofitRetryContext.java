@@ -1,5 +1,7 @@
 package io.github.easyretrofit.extension.retry.core;
 
+import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;

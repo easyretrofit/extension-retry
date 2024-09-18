@@ -1,5 +1,6 @@
-package io.github.easyretrofit.extension.retry.core;
+package io.github.easyretrofit.extension.retry.core.resource;
 
+import io.github.easyretrofit.extension.retry.core.PredicateCreator;
 import okhttp3.Response;
 
 import javax.annotation.Nullable;

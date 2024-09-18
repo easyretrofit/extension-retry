@@ -1,5 +1,6 @@
 package io.github.easyretrofit.extension.retry.core;
 
+import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.OkHttpClient;
 
 public class OkHttpClientBuilder {

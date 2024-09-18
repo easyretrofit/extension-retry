@@ -1,7 +1,9 @@
-package io.github.easyretrofit.extension.retry.core;
+package io.github.easyretrofit.extension.retry.core.interceptor;
 
 import io.github.easyretrofit.core.RetrofitResourceContext;
 import io.github.easyretrofit.core.extension.BaseInterceptor;
+import io.github.easyretrofit.extension.retry.core.RetrofitRetryContext;
+import io.github.easyretrofit.extension.retry.core.RetryHandler;
 import okhttp3.Response;
 
 import java.io.IOException;

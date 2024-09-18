@@ -1,5 +1,6 @@
 package io.github.easyretrofit.extension.retry.core;
 
+import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import junit.framework.TestCase;
 import okhttp3.*;
 import okhttp3.mockwebserver.MockResponse;
