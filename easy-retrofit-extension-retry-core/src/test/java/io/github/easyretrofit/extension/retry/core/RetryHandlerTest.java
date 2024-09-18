@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeoutException;
 
-public class RetryTest extends TestCase {
+public class RetryHandlerTest extends TestCase {
     @Rule
     public final MockWebServer server = new MockWebServer();
     OkHttpClient client;

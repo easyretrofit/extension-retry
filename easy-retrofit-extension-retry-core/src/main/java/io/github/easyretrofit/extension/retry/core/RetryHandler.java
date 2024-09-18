@@ -4,17 +4,16 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
 import static io.github.easyretrofit.extension.retry.core.MaxRetriesExceededException.createMaxRetriesExceededException;
 
-public class Retry implements Interceptor {
+public class RetryHandler implements Interceptor {
     private int retryCount;
     private final RetryConfig config;
 
-    public Retry(RetryConfig config) {
+    public RetryHandler(RetryConfig config) {
         this.config = config;
         this.retryCount = config.getMaxRetries();
     }

@@ -5,8 +5,6 @@ import io.github.easyretrofit.core.extension.BaseInterceptor;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.util.concurrent.TimeoutException;
 
 public class RetryInterceptor extends BaseInterceptor {
 
@@ -20,7 +18,7 @@ public class RetryInterceptor extends BaseInterceptor {
     @Override
     protected Response executeIntercept(Chain chain) throws IOException {
 
-        return new Retry(retryContext.getRetryConfig("test"))
+        return new RetryHandler(retryContext.getRetryConfig("test"))
                 .intercept(chain);
     }
 

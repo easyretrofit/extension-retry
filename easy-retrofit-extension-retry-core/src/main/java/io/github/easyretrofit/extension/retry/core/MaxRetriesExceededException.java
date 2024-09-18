@@ -11,21 +11,21 @@ public class MaxRetriesExceededException extends RuntimeException {
     /**
      * Static method to construct a {@link MaxRetriesExceededException}
      *
-     * @param retry the Retry which failed
+     * @param retryHandler the Retry which failed
      */
-    public static MaxRetriesExceededException createMaxRetriesExceededException(Retry retry) {
-        boolean writeStackTrace = retry.getConfig().isWriteableStackTrace();
-        String resourceName = retry.getConfig().getResourceName();
+    public static MaxRetriesExceededException createMaxRetriesExceededException(RetryHandler retryHandler) {
+        boolean writeStackTrace = retryHandler.getConfig().isWriteableStackTrace();
+        String resourceName = retryHandler.getConfig().getResourceName();
         String message = String.format(
                 "Retry '%s' has exhausted all attempts (%d)",
-                retry.getConfig().getResourceName(),
-                retry.getConfig().getMaxRetries()
+                retryHandler.getConfig().getResourceName(),
+                retryHandler.getConfig().getMaxRetries()
         );
         throw new MaxRetriesExceededException(resourceName, message, writeStackTrace);
     }
 
     /**
-     * @return the name of the {@link Retry} that caused this exception
+     * @return the name of the {@link RetryHandler} that caused this exception
      */
     public String getCausingRetryName() {
         return causingRetryName;

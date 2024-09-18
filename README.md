@@ -1,2 +1,2 @@
-# extension-retry
-easy retrofit extension retry function
+# extension-retryHandler
+easy retrofit extension retryHandler function
