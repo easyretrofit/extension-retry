@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.easyretrofit</groupId>
-        <artifactId>extension-retryHandler-parent</artifactId>
+        <artifactId>extension-retry-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
@@ -22,6 +22,32 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
+        <easyretrofit.retry.version>1.0.0-SNAPSHOT</easyretrofit.retry.version>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.easyretrofit</groupId>
+            <artifactId>extension-retry-core</artifactId>
+            <version>${easyretrofit.retry.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.easyretrofit</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>
