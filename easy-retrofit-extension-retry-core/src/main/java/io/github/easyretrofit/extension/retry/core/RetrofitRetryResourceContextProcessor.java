@@ -9,10 +9,8 @@ import io.github.easyretrofit.extension.retry.core.properties.RetrofitRetryPrope
 import io.github.easyretrofit.extension.retry.core.resource.*;
 import io.github.easyretrofit.extension.retry.core.util.ResourceNameUtil;
 import io.github.easyretrofit.extension.retry.core.util.WaitDurationUtils;
-import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.*;
@@ -54,11 +52,11 @@ public class RetrofitRetryResourceContextProcessor {
                 for (Method declaredMethod : apiClazz.getDeclaredMethods()) {
                     Set<RetryConfigBean> retryConfigBeans = new HashSet<>();
                     Annotation[] annotations = declaredMethod.getAnnotations();
-                    RetryConfigBean retryConfigBean = getRetryBean(annotations, declaredMethod, retryProperties);
+                    RetryConfigBean retryConfigBean = getRetryConfigBean(annotations, declaredMethod, retryProperties);
                     if (retryConfigBean == null) {
-                        RetryConfigBean selfClazzRetryBean = getRetryBean(apiClazz.getDeclaredAnnotations(), declaredMethod, retryProperties);
+                        RetryConfigBean selfClazzRetryBean = getRetryConfigBean(apiClazz.getDeclaredAnnotations(), declaredMethod, retryProperties);
                         if (selfClazzRetryBean == null && parentClazz != null) {
-                            RetryConfigBean parentClazzRetryBean = getRetryBean(parentClazz.getDeclaredAnnotations(), declaredMethod, retryProperties);
+                            RetryConfigBean parentClazzRetryBean = getRetryConfigBean(parentClazz.getDeclaredAnnotations(), declaredMethod, retryProperties);
                             if (parentClazzRetryBean != null) {
                                 retryConfigBeans.add(parentClazzRetryBean);
                             }
@@ -81,14 +79,14 @@ public class RetrofitRetryResourceContextProcessor {
                 retryResourceContext.addFallBackBean(retryConfigBean.getDefaultResourceName(), new FallBackBean(retryConfigBean.getResourceName(), retryConfigBean.getFallBackMethodName(), retryConfigBean));
                 RetryConfig.Builder builder = RetryConfig.custom();
                 builder.resourceName(retryConfigBean.getResourceName());
-                if (retryConfigBean.getMaxRetries().isPresent()) {
+                if (retryConfigBean.getMaxRetries() != null && retryConfigBean.getMaxRetries().isPresent()) {
                     builder.maxAttempts(retryConfigBean.getMaxRetries().get());
                 }
-                if (retryConfigBean.getWaitDuration().isPresent()) {
+                if (retryConfigBean.getWaitDuration() != null && retryConfigBean.getWaitDuration().isPresent()) {
                     long waitDuration = WaitDurationUtils.getWaitDuration(retryConfigBean.getWaitDuration().get());
                     builder.waitDuration(Duration.ofMillis(waitDuration));
                 }
-                if (retryConfigBean.getBackoffExponentialMultiplier().isPresent()) {
+                if (retryConfigBean.getBackoffExponentialMultiplier() != null && retryConfigBean.getBackoffExponentialMultiplier().isPresent()) {
                     builder.backoffMultiplier(retryConfigBean.getBackoffExponentialMultiplier().get());
                 }
                 RetryConfig retryConfig = builder.build();
@@ -97,7 +95,7 @@ public class RetrofitRetryResourceContextProcessor {
         }
     }
 
-    private RetryConfigBean getRetryBean(Annotation[] annotations, Method declaredMethod, RetrofitRetryProperties retryProperties) {
+    private RetryConfigBean getRetryConfigBean(Annotation[] annotations, Method declaredMethod, RetrofitRetryProperties retryProperties) {
         for (Annotation annotation : annotations) {
             if (annotation instanceof Retry) {
                 CustomizedRetryConfig properties = RetryConfigPropertiesProcessor.getCustomizedRetryConfig((Retry) annotation, retryProperties);
