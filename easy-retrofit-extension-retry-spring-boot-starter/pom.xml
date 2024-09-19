@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>extension-retryHandler-spring-boot-starter</artifactId>
+    <artifactId>extension-retry-spring-boot-starter</artifactId>
 
     <url>https://github.com/easyretrofit/${project.artifactId}</url>
     <scm>

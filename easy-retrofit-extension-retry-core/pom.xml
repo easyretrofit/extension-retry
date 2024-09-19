@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>extension-retryHandler-core</artifactId>
+    <artifactId>extension-retry-core</artifactId>
 
     <url>https://github.com/easyretrofit/${project.artifactId}</url>
 
