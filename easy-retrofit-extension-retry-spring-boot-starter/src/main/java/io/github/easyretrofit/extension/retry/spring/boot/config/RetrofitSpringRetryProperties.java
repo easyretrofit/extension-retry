@@ -7,6 +7,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "retrofit.retry")
 public class RetrofitSpringRetryProperties extends RetrofitRetryProperties {
 
-
-
 }

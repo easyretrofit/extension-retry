@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class RetrofitRetryProperties {
 
-    private Map<String, InstanceProperties> instances = new HashMap<>();
-    private Map<String, ConfigProperties> configs = new HashMap<>();
+    protected Map<String, InstanceProperties> instances = new HashMap<>();
+    protected Map<String, ConfigProperties> configs = new HashMap<>();
 
 
     public void checkAndMerge() {

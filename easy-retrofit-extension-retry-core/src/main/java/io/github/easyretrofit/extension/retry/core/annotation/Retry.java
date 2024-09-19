@@ -9,9 +9,9 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Retry {
 
-    String resourceName() default "";
+    String resourceName();
 
     Class<? extends BaseRetryConfig> config() default BaseRetryConfig.class;
 
-    String fallbackMethod();
+    String fallbackMethod() default "";
 }

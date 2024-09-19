@@ -10,11 +10,12 @@ import java.io.IOException;
 
 public class RetryInterceptor extends BaseInterceptor {
 
-
+    private final RetrofitResourceContext context;
     private final RetrofitRetryResourceContext retryContext;
 
-    public RetryInterceptor(RetrofitRetryResourceContext retryContext) {
+    public RetryInterceptor(RetrofitResourceContext context, RetrofitRetryResourceContext retryContext) {
         this.retryContext = retryContext;
+        this.context = context;
     }
 
     @Override
@@ -26,6 +27,6 @@ public class RetryInterceptor extends BaseInterceptor {
 
     @Override
     protected RetrofitResourceContext getInjectedRetrofitResourceContext() {
-        return null;
+        return context;
     }
 }
