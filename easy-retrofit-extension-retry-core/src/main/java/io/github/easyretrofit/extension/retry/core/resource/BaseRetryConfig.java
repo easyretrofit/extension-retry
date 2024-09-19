@@ -1,4 +1,10 @@
 package io.github.easyretrofit.extension.retry.core.resource;
 
-public class BaseRetryConfig {
+public abstract class BaseRetryConfig {
+
+    protected abstract CustomizedRetryConfig customizeRetryConfig();
+
+    public CustomizedRetryConfig build() {
+        return this.customizeRetryConfig();
+    }
 }

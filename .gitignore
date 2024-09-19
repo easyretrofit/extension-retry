@@ -24,3 +24,5 @@ hs_err_pid*
 replay_pid*
 /.idea/
 /easy-retrofit-extension-retryHandler-core/target/
+/easy-retrofit-extension-retry-spring-boot-starter/target/
+/easy-retrofit-extension-retry-core/target/

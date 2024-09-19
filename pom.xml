@@ -25,8 +25,8 @@
     </scm>
 
     <modules>
-        <module>easy-retrofit-extension-retryHandler-core</module>
-        <module>easy-retrofit-extension-retryHandler-spring-boot-starter</module>
+        <module>easy-retrofit-extension-retry-core</module>
+        <module>easy-retrofit-extension-retry-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -36,7 +36,7 @@
         <java.source.version>${java.version}</java.source.version>
         <java.target.version>${java.version}</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <easy.retrofit.core.version>1.1.0</easy.retrofit.core.version>
+        <easy.retrofit.core.version>1.2.0-SNAPSHOT</easy.retrofit.core.version>
         <junit.version>4.13.2</junit.version>
     </properties>
 

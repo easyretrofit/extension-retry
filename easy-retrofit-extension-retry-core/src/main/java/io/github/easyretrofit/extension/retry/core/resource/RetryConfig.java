@@ -27,6 +27,9 @@ public class RetryConfig {
     private Predicate<Throwable> exceptionPredicate;
     private boolean writeableStackTrace = true;
     private String resourceName;
+    private String defaultResourceName;
+    private String fallBackMethodName;
+    private Class<?> configClazz;
 
     public RetryConfig() {
 
@@ -81,6 +84,18 @@ public class RetryConfig {
         return resourceName;
     }
 
+    public String getDefaultResourceName() {
+        return defaultResourceName;
+    }
+
+    public String getFallBackMethodName() {
+        return fallBackMethodName;
+    }
+
+    public Class<?> getConfigClazz() {
+        return configClazz;
+    }
+
 
     public static class Builder {
         private int maxAttempts = DEFAULT_MAX_ATTEMPTS;
@@ -94,6 +109,9 @@ public class RetryConfig {
         private Class<? extends Throwable>[] ignoreExceptions = new Class[0];
         private boolean writeableStackTrace = false;
         private String resourceName;
+        private String defaultResourceName;
+        private String fallBackMethodName;
+        private Class<?> configClazz;
 
         public Builder() {
         }
@@ -113,6 +131,9 @@ public class RetryConfig {
             config.writeableStackTrace = writeableStackTrace;
             config.exceptionPredicate = createExceptionPredicate();
             config.resourceName = resourceName;
+            config.defaultResourceName = defaultResourceName;
+            config.fallBackMethodName = fallBackMethodName;
+            config.configClazz = configClazz;
             return config;
         }
 
@@ -178,7 +199,7 @@ public class RetryConfig {
                     .orElse(DEFAULT_RECORD_FAILURE_PREDICATE);
         }
 
-        private Builder writeableStackTrace(boolean writeableStackTrace) {
+        public Builder writeableStackTrace(boolean writeableStackTrace) {
             this.writeableStackTrace = writeableStackTrace;
             return this;
         }
@@ -188,6 +209,23 @@ public class RetryConfig {
             this.resourceName = resourceName;
             return this;
         }
+
+        public Builder defaultResourceName(String defaultResourceName) {
+            this.defaultResourceName = defaultResourceName;
+            return this;
+        }
+
+        public Builder fallBackMethodName(String fallBackMethodName) {
+            this.fallBackMethodName = fallBackMethodName;
+            return this;
+        }
+
+        public Builder configClazz(Class<?> configClazz) {
+            this.configClazz = configClazz;
+            return this;
+        }
+
+
     }
 
 
