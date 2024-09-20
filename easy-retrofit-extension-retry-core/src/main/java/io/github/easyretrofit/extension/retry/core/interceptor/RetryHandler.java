@@ -1,4 +1,4 @@
-package io.github.easyretrofit.extension.retry.core;
+package io.github.easyretrofit.extension.retry.core.interceptor;
 
 import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.Interceptor;
