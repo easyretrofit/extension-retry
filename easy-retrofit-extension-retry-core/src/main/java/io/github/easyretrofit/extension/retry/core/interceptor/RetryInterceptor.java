@@ -33,7 +33,7 @@ public class RetryInterceptor extends BaseInterceptor {
                     resourceName = getResourceName(annotationFromParentClass);
                 }
             } else {
-                resourceName = getResourceName(annotationFromMethod);
+                resourceName = getResourceName(annotationFromCurrentClass);
             }
         } else {
             resourceName = getResourceName(annotationFromMethod);
