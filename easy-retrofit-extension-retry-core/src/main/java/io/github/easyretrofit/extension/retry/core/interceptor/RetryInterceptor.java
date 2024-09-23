@@ -4,7 +4,6 @@ import io.github.easyretrofit.core.RetrofitResourceContext;
 import io.github.easyretrofit.core.extension.BaseInterceptor;
 import io.github.easyretrofit.extension.retry.core.RetrofitRetryResourceContext;
 import io.github.easyretrofit.extension.retry.core.annotation.Retry;
-import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
@@ -48,6 +47,11 @@ public class RetryInterceptor extends BaseInterceptor {
     @Override
     protected RetrofitResourceContext getInjectedRetrofitResourceContext() {
         return context;
+    }
+
+    @Override
+    public RetryInterceptor clone() {
+        return (RetryInterceptor) super.clone();
     }
 
     private String getResourceName(List<Annotation> annotations) {
