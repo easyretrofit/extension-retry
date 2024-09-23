@@ -89,14 +89,14 @@ public class RetrofitRetryResourceContextProcessor {
                 if (retryConfigBean.getBackoffExponentialMultiplier() != null && retryConfigBean.getBackoffExponentialMultiplier().isPresent()) {
                     builder.backoffMultiplier(retryConfigBean.getBackoffExponentialMultiplier().get());
                 }
-                if (retryConfigBean.getRetryExceptions() != null && retryConfigBean.getRetryExceptions().isPresent()) {
-                    builder.retryExceptions(retryConfigBean.getRetryExceptions().get());
+                if (retryConfigBean.getRetryExceptions() != null) {
+                    builder.retryExceptions(retryConfigBean.getRetryExceptions());
                 }
-                if (retryConfigBean.getIgnoreExceptions() != null && retryConfigBean.getIgnoreExceptions().isPresent()) {
-                    builder.ignoreExceptions(retryConfigBean.getIgnoreExceptions().get());
+                if (retryConfigBean.getIgnoreExceptions() != null) {
+                    builder.ignoreExceptions(retryConfigBean.getIgnoreExceptions());
                 }
-                if (retryConfigBean.getRetryOnResultPredicate() != null && retryConfigBean.getRetryOnResultPredicate().isPresent()) {
-                    Class<? extends Predicate<Response>> clazz = retryConfigBean.getRetryOnResultPredicate().get();
+                if (retryConfigBean.getRetryOnResultPredicate() != null) {
+                    Class<? extends Predicate<Response>> clazz = retryConfigBean.getRetryOnResultPredicate();
                     Predicate<Response> bean = cdiBeanManager.getBean(clazz);
                     if (bean == null) {
                         try {
@@ -107,8 +107,8 @@ public class RetrofitRetryResourceContextProcessor {
                     }
                     builder.retryOnResult(bean);
                 }
-                if (retryConfigBean.getExceptionPredicate() != null && retryConfigBean.getExceptionPredicate().isPresent()) {
-                    Class<? extends Predicate<Throwable>> clazz = retryConfigBean.getExceptionPredicate().get();
+                if (retryConfigBean.getExceptionPredicate() != null) {
+                    Class<? extends Predicate<Throwable>> clazz = retryConfigBean.getExceptionPredicate();
                     Predicate<Throwable> bean = cdiBeanManager.getBean(clazz);
                     if (bean == null) {
                         try {

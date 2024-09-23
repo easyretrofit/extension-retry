@@ -4,6 +4,7 @@ import io.github.easyretrofit.core.RetrofitResourceContext;
 import io.github.easyretrofit.core.extension.BaseInterceptor;
 import io.github.easyretrofit.extension.retry.core.RetrofitRetryResourceContext;
 import io.github.easyretrofit.extension.retry.core.annotation.Retry;
+import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.Response;
 
 import java.io.IOException;
@@ -40,8 +41,12 @@ public class RetryInterceptor extends BaseInterceptor {
         if (resourceName == null) {
             return chain.proceed(chain.request());
         }
-        return new RetryHandler(retryContext.getRetryConfig(resourceName))
-                .intercept(chain);
+        RetryConfig retryConfig = retryContext.getRetryConfig(resourceName);
+        if (retryConfig != null) {
+            return new RetryHandler(retryContext.getRetryConfig(resourceName))
+                    .intercept(chain);
+        }
+        return chain.proceed(chain.request());
     }
 
     @Override

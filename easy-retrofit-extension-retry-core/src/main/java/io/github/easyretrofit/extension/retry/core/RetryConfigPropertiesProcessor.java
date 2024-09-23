@@ -59,6 +59,12 @@ public class RetryConfigPropertiesProcessor {
                             destinationField.setAccessible(true);
                             destinationField.set(destination, optionalValue);
                         }
+                    } else {
+                        if (value != null) {
+                            Field destinationField = destinationClass.getDeclaredField(field.getName());
+                            destinationField.setAccessible(true);
+                            destinationField.set(destination, value);
+                        }
                     }
                 } catch (IllegalAccessException | NoSuchFieldException ignored) {
                 }
