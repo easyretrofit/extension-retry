@@ -10,32 +10,6 @@ public class RetrofitRetryProperties {
     protected Map<String, InstanceProperties> instances = new HashMap<>();
     protected Map<String, ConfigProperties> configs = new HashMap<>();
 
-
-    public void checkAndMerge() {
-        instances.forEach((resourceName, bean) -> {
-            if (bean.getBaseConfig() != null) {
-                ConfigProperties configProperties = configs.get(bean.getBaseConfig());
-                if (configProperties == null) {
-                    throw new IllegalArgumentException("retry instances '" + resourceName + "' : baseConfig " + bean.getBaseConfig() + " not found");
-                } else {
-                    merge(bean, configProperties);
-                }
-            }
-        });
-    }
-
-    private void merge(InstanceProperties instanceProperties, ConfigProperties configProperties) {
-        if (instanceProperties.getMaxRetries().isPresent()) {
-            instanceProperties.setMaxRetries(configProperties.getMaxRetries());
-        }
-        if (instanceProperties.getWaitDuration().isPresent()) {
-            instanceProperties.setWaitDuration(configProperties.getWaitDuration());
-        }
-        if (instanceProperties.getBackoffExponentialMultiplier().isPresent()) {
-            instanceProperties.setBackoffExponentialMultiplier(configProperties.getBackoffExponentialMultiplier());
-        }
-    }
-
     public static class InstanceProperties extends CustomizedRetryConfig {
         private String baseConfig;
 

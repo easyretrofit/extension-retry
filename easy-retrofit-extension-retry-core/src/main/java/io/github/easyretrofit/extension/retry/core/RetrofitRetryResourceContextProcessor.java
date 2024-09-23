@@ -9,16 +9,18 @@ import io.github.easyretrofit.extension.retry.core.properties.RetrofitRetryPrope
 import io.github.easyretrofit.extension.retry.core.resource.*;
 import io.github.easyretrofit.extension.retry.core.util.ResourceNameUtil;
 import io.github.easyretrofit.extension.retry.core.util.WaitDurationUtils;
+import okhttp3.Response;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class RetrofitRetryResourceContextProcessor {
 
     private final CDIBeanManager cdiBeanManager;
-    private RetrofitRetryResourceContext retryResourceContext;
+    private final RetrofitRetryResourceContext retryResourceContext;
 
 
     public RetrofitRetryResourceContextProcessor(RetrofitResourceContext retrofitResourceContext,
@@ -30,8 +32,6 @@ public class RetrofitRetryResourceContextProcessor {
     }
 
     public RetrofitRetryResourceContext generateRetryResourceContext() {
-
-
         return retryResourceContext;
     }
 
@@ -88,6 +88,36 @@ public class RetrofitRetryResourceContextProcessor {
                 }
                 if (retryConfigBean.getBackoffExponentialMultiplier() != null && retryConfigBean.getBackoffExponentialMultiplier().isPresent()) {
                     builder.backoffMultiplier(retryConfigBean.getBackoffExponentialMultiplier().get());
+                }
+                if (retryConfigBean.getRetryExceptions() != null && retryConfigBean.getRetryExceptions().isPresent()) {
+                    builder.retryExceptions(retryConfigBean.getRetryExceptions().get());
+                }
+                if (retryConfigBean.getIgnoreExceptions() != null && retryConfigBean.getIgnoreExceptions().isPresent()) {
+                    builder.ignoreExceptions(retryConfigBean.getIgnoreExceptions().get());
+                }
+                if (retryConfigBean.getRetryOnResultPredicate() != null && retryConfigBean.getRetryOnResultPredicate().isPresent()) {
+                    Class<? extends Predicate<Response>> clazz = retryConfigBean.getRetryOnResultPredicate().get();
+                    Predicate<Response> bean = cdiBeanManager.getBean(clazz);
+                    if (bean == null) {
+                        try {
+                            bean = clazz.newInstance();
+                        } catch (IllegalAccessException | InstantiationException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    builder.retryOnResult(bean);
+                }
+                if (retryConfigBean.getExceptionPredicate() != null && retryConfigBean.getExceptionPredicate().isPresent()) {
+                    Class<? extends Predicate<Throwable>> clazz = retryConfigBean.getExceptionPredicate().get();
+                    Predicate<Throwable> bean = cdiBeanManager.getBean(clazz);
+                    if (bean == null) {
+                        try {
+                            bean = clazz.newInstance();
+                        } catch (IllegalAccessException | InstantiationException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    builder.retryOnException(bean);
                 }
                 RetryConfig retryConfig = builder.build();
                 retryResourceContext.addRetryConfig(retryConfig);
