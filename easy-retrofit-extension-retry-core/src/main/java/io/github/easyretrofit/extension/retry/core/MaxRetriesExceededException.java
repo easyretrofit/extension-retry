@@ -2,7 +2,7 @@ package io.github.easyretrofit.extension.retry.core;
 
 import io.github.easyretrofit.extension.retry.core.interceptor.RetryHandler;
 
-public class MaxRetriesExceededException extends RuntimeException {
+public class MaxRetriesExceededException extends RetryException {
     private final transient String causingRetryName;
 
     private MaxRetriesExceededException(String causingRetryName, String message, boolean writeableStackTrace) {
