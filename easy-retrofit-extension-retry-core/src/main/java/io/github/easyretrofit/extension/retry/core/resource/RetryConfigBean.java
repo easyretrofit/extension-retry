@@ -2,7 +2,6 @@ package io.github.easyretrofit.extension.retry.core.resource;
 
 public class RetryConfigBean extends CustomizedRetryConfig {
     private String resourceName;
-    private String defaultResourceName;
     private String fallBackMethodName;
     private Class<?> configClazz;
 
@@ -31,11 +30,4 @@ public class RetryConfigBean extends CustomizedRetryConfig {
         this.resourceName = resourceName;
     }
 
-    public String getDefaultResourceName() {
-        return defaultResourceName;
-    }
-
-    public void setDefaultResourceName(String defaultResourceName) {
-        this.defaultResourceName = defaultResourceName;
-    }
 }

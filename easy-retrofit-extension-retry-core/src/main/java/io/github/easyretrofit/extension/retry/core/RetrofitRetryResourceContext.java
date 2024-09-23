@@ -11,6 +11,7 @@ import java.util.List;
 public class RetrofitRetryResourceContext {
 
     private final HashMap<String, List<FallBackBean>> fallBackBeanMap = new HashMap<>();
+
     private final HashMap<String, RetryConfig> retryConfigHashMap;
 
     public RetrofitRetryResourceContext() {
@@ -20,6 +21,10 @@ public class RetrofitRetryResourceContext {
 
     public RetryConfig getRetryConfig(String resourceName) {
         return retryConfigHashMap.get(resourceName);
+    }
+
+    public HashMap<String, RetryConfig> getRetryConfigHashMap() {
+        return retryConfigHashMap;
     }
 
     public void addFallBackBean(String resourceName, FallBackBean fallBackBean) {

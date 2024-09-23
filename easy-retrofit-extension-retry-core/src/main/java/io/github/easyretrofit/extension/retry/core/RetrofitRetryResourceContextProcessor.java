@@ -5,11 +5,14 @@ import io.github.easyretrofit.core.RetrofitResourceContext;
 import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
 import io.github.easyretrofit.core.resource.RetrofitClientBean;
 import io.github.easyretrofit.extension.retry.core.annotation.Retry;
+import io.github.easyretrofit.extension.retry.core.interceptor.RetryHandler;
 import io.github.easyretrofit.extension.retry.core.properties.RetrofitRetryProperties;
 import io.github.easyretrofit.extension.retry.core.resource.*;
 import io.github.easyretrofit.extension.retry.core.util.ResourceNameUtil;
 import io.github.easyretrofit.extension.retry.core.util.WaitDurationUtils;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -18,6 +21,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class RetrofitRetryResourceContextProcessor {
+    private static final Logger log = LoggerFactory.getLogger(RetrofitRetryResourceContextProcessor.class);
 
     private final CDIBeanManager cdiBeanManager;
     private final RetrofitRetryResourceContext retryResourceContext;
@@ -32,6 +36,13 @@ public class RetrofitRetryResourceContextProcessor {
     }
 
     public RetrofitRetryResourceContext generateRetryResourceContext() {
+        log.debug("Generate Retry Resource Context");
+        HashMap<String, RetryConfig> retryConfigHashMap = retryResourceContext.getRetryConfigHashMap();
+        for (Map.Entry<String, RetryConfig> entry : retryConfigHashMap.entrySet()) {
+            String key = entry.getKey();
+            RetryConfig value = entry.getValue();
+            log.debug("{} -> {}", key, value.toString());
+        }
         return retryResourceContext;
     }
 
@@ -76,7 +87,7 @@ public class RetrofitRetryResourceContextProcessor {
     private void setToRetryResourceContext(Set<RetryConfigBean> retryConfigBeans) {
         for (RetryConfigBean retryConfigBean : retryConfigBeans) {
             if (retryConfigBean != null) {
-                retryResourceContext.addFallBackBean(retryConfigBean.getDefaultResourceName(), new FallBackBean(retryConfigBean.getResourceName(), retryConfigBean.getFallBackMethodName(), retryConfigBean));
+                retryResourceContext.addFallBackBean(retryConfigBean.getResourceName(), new FallBackBean(retryConfigBean.getResourceName(), retryConfigBean.getFallBackMethodName(), retryConfigBean));
                 RetryConfig.Builder builder = RetryConfig.custom();
                 builder.resourceName(retryConfigBean.getResourceName());
                 if (retryConfigBean.getMaxRetries() != null && retryConfigBean.getMaxRetries().isPresent()) {
@@ -95,6 +106,7 @@ public class RetrofitRetryResourceContextProcessor {
                 if (retryConfigBean.getIgnoreExceptions() != null) {
                     builder.ignoreExceptions(retryConfigBean.getIgnoreExceptions());
                 }
+                builder.writeableStackTrace(retryConfigBean.isWriteableStackTrace());
                 if (retryConfigBean.getRetryOnResultPredicate() != null) {
                     Class<? extends Predicate<Response>> clazz = retryConfigBean.getRetryOnResultPredicate();
                     Predicate<Response> bean = cdiBeanManager.getBean(clazz);
@@ -129,11 +141,7 @@ public class RetrofitRetryResourceContextProcessor {
         for (Annotation annotation : annotations) {
             if (annotation instanceof Retry) {
                 CustomizedRetryConfig properties = RetryConfigPropertiesProcessor.getCustomizedRetryConfig((Retry) annotation, retryProperties);
-                RetryConfigBean retryConfigBean = RetryConfigCustomizeProcessor.getCustomizedRetryConfig((Retry) annotation, properties, cdiBeanManager);
-                if (retryConfigBean != null) {
-                    retryConfigBean.setDefaultResourceName(ResourceNameUtil.getConventionResourceName(declaredMethod));
-                    return retryConfigBean;
-                }
+                return RetryConfigCustomizeProcessor.getCustomizedRetryConfig((Retry) annotation, properties, cdiBeanManager);
             }
         }
         return null;

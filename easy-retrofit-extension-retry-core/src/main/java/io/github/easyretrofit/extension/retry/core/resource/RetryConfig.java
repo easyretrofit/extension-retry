@@ -5,6 +5,7 @@ import okhttp3.Response;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 public class RetryConfig {
@@ -27,7 +28,6 @@ public class RetryConfig {
     private Predicate<Throwable> exceptionPredicate;
     private boolean writeableStackTrace = true;
     private String resourceName;
-    private String defaultResourceName;
     private String fallBackMethodName;
     private Class<?> configClazz;
 
@@ -84,16 +84,30 @@ public class RetryConfig {
         return resourceName;
     }
 
-    public String getDefaultResourceName() {
-        return defaultResourceName;
-    }
-
     public String getFallBackMethodName() {
         return fallBackMethodName;
     }
 
     public Class<?> getConfigClazz() {
         return configClazz;
+    }
+
+
+    @Override
+    public String toString() {
+        return "RetryConfig {" +
+                "maxRetries=" + maxRetries +
+                ", waitDuration=" + waitDuration +
+                ", backoffExponentialMultiplier=" + backoffExponentialMultiplier +
+                ", retryOnResultPredicate=" + retryOnResultPredicate +
+                ", retryExceptions=" + Arrays.toString(retryExceptions) +
+                ", ignoreExceptions=" + Arrays.toString(ignoreExceptions) +
+                ", exceptionPredicate=" + exceptionPredicate +
+                ", writeableStackTrace=" +writeableStackTrace +
+                ", resourceName='" + resourceName + '\'' +
+                ", fallBackMethodName='" + fallBackMethodName + '\'' +
+                ", configClazz=" + configClazz +
+                '}';
     }
 
 
@@ -109,7 +123,6 @@ public class RetryConfig {
         private Class<? extends Throwable>[] ignoreExceptions = new Class[0];
         private boolean writeableStackTrace = false;
         private String resourceName;
-        private String defaultResourceName;
         private String fallBackMethodName;
         private Class<?> configClazz;
 
@@ -131,7 +144,6 @@ public class RetryConfig {
             config.writeableStackTrace = writeableStackTrace;
             config.exceptionPredicate = createExceptionPredicate();
             config.resourceName = resourceName;
-            config.defaultResourceName = defaultResourceName;
             config.fallBackMethodName = fallBackMethodName;
             config.configClazz = configClazz;
             return config;
@@ -207,11 +219,6 @@ public class RetryConfig {
 
         public Builder resourceName(String resourceName) {
             this.resourceName = resourceName;
-            return this;
-        }
-
-        public Builder defaultResourceName(String defaultResourceName) {
-            this.defaultResourceName = defaultResourceName;
             return this;
         }
 
