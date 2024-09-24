@@ -1,6 +1,8 @@
 package io.github.easyretrofit.extension.retry.core.interceptor;
 
 import io.github.easyretrofit.core.RetrofitResourceContextLog;
+import io.github.easyretrofit.core.extension.InterceptorUtils;
+import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
 import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -17,10 +19,12 @@ public class RetryHandler implements Interceptor {
     private static final Logger log = LoggerFactory.getLogger(RetryHandler.class);
     private int retryCount;
     private final RetryConfig config;
+    private final RetrofitApiInterfaceBean currentApiInterfaceBean;
 
-    public RetryHandler(RetryConfig config) {
+    public RetryHandler(RetryConfig config, RetrofitApiInterfaceBean currentApiInterfaceBean) {
         this.config = config;
         this.retryCount = config.getMaxRetries();
+        this.currentApiInterfaceBean = currentApiInterfaceBean;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class RetryHandler implements Interceptor {
                 response = chain.proceed(request);
                 if (config.getRetryOnResultPredicate() != null && config.getRetryOnResultPredicate().test(response)) {
                     if (this.shouldRetry()) {
-                        createMaxRetriesExceededException(this);
+                        createMaxRetriesExceededException(this, currentApiInterfaceBean, request, config.getResourceName());
                     }
                     retry();
                     continue;
@@ -40,7 +44,7 @@ public class RetryHandler implements Interceptor {
                 return response;
             } catch (Exception e) {
                 if (this.shouldRetry()) {
-                    createMaxRetriesExceededException(this);
+                    createMaxRetriesExceededException(this, currentApiInterfaceBean, request, config.getResourceName());
                 } else if (Objects.requireNonNull(config.getExceptionPredicate()).test(e)) {
                     retry();
                 } else if (Arrays.stream(config.getIgnoreExceptions()).anyMatch(x -> x.isInstance(e))) {

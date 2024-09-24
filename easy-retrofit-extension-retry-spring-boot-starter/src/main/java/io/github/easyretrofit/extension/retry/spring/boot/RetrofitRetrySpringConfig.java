@@ -33,6 +33,7 @@ public class RetrofitRetrySpringConfig implements ApplicationContextAware {
                 new SpringCDIBeanManager(applicationContext),
                 properties);
         RetrofitRetryResourceContext context = processor.generateRetryResourceContext();
+        context.check();
         return context;
     }
 

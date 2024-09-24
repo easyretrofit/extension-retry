@@ -36,7 +36,7 @@
         <java.source.version>${java.version}</java.source.version>
         <java.target.version>${java.version}</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <easy.retrofit.core.version>1.1.1</easy.retrofit.core.version>
+        <easy.retrofit.core.version>1.1.2-SNAPSHOT</easy.retrofit.core.version>
         <extension.name>extension-retry</extension.name>
         <junit.version>4.13.2</junit.version>
         <slf4j.version>1.7.36</slf4j.version>
