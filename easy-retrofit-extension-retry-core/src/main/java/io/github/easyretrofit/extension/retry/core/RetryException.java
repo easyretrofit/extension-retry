@@ -2,7 +2,6 @@ package io.github.easyretrofit.extension.retry.core;
 
 import io.github.easyretrofit.core.exception.RetrofitExtensionException;
 import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
-import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.Request;
 
 public class RetryException extends RetrofitExtensionException {

@@ -3,6 +3,7 @@ package io.github.easyretrofit.extension.retry.core.interceptor;
 import io.github.easyretrofit.core.RetrofitResourceContextLog;
 import io.github.easyretrofit.core.extension.InterceptorUtils;
 import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
+import io.github.easyretrofit.extension.retry.core.RetryException;
 import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -10,6 +11,7 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -42,7 +44,9 @@ public class RetryHandler implements Interceptor {
                     continue;
                 }
                 return response;
-            } catch (Exception e) {
+            } catch (RetryException retryException) {
+                throw retryException;
+            } catch (IOException e) {
                 if (this.shouldRetry()) {
                     createMaxRetriesExceededException(this, currentApiInterfaceBean, request, config.getResourceName());
                 } else if (Objects.requireNonNull(config.getExceptionPredicate()).test(e)) {

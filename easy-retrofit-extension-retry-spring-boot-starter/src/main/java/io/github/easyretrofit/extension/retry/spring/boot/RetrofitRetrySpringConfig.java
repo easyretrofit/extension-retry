@@ -3,6 +3,8 @@ package io.github.easyretrofit.extension.retry.spring.boot;
 import io.github.easyretrofit.core.RetrofitResourceContext;
 import io.github.easyretrofit.extension.retry.core.RetrofitRetryResourceContext;
 import io.github.easyretrofit.extension.retry.core.RetrofitRetryResourceContextProcessor;
+import io.github.easyretrofit.extension.retry.core.RetryException;
+import io.github.easyretrofit.extension.retry.core.interceptor.RetryExceptionFallBackHandler;
 import io.github.easyretrofit.extension.retry.core.interceptor.RetryInterceptor;
 import io.github.easyretrofit.extension.retry.spring.boot.config.RetrofitSpringRetryProperties;
 import io.github.easyretrofit.spring.boot.SpringCDIBeanManager;
@@ -42,5 +44,11 @@ public class RetrofitRetrySpringConfig implements ApplicationContextAware {
     public RetryInterceptor retrofitRetryInterceptor(@Autowired RetrofitSpringRetryProperties properties) {
         RetrofitResourceContext context = applicationContext.getBean(RetrofitResourceContext.class);
         return new RetryInterceptor(context, retrofitRetryResourceContext(properties));
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RetryExceptionFallBackHandler exceptionFallBackHandler() {
+        return new RetryExceptionFallBackHandler(RetryException.class, new SpringCDIBeanManager(applicationContext));
     }
 }

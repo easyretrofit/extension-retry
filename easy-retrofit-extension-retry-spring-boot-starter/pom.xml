@@ -25,6 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
         <easyretrofit.retry.version>1.1.0-SNAPSHOT</easyretrofit.retry.version>
+        <easyretrofit.spring.version>1.1.2-SNAPSHOT</easyretrofit.spring.version>
         <lombok.version>1.18.22</lombok.version>
     </properties>
 
@@ -38,7 +39,7 @@
         <dependency>
             <groupId>io.github.easyretrofit</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>1.1.0</version>
+            <version>${easyretrofit.spring.version}</version>
             <scope>provided</scope>
         </dependency>
 
