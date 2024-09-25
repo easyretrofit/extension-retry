@@ -15,6 +15,7 @@ public class CustomizedRetryConfig {
     protected Class<? extends Throwable>[] ignoreExceptions;
     protected Class<? extends Predicate<Response>> retryOnResultPredicate;
     protected Class<? extends Predicate<Throwable>> exceptionPredicate;
+    private boolean writeableStackTrace = true;
 
     public Class<? extends Throwable>[] getRetryExceptions() {
         return retryExceptions;
@@ -70,5 +71,13 @@ public class CustomizedRetryConfig {
 
     public void setBackoffExponentialMultiplier(Optional<Double> backoffExponentialMultiplier) {
         this.backoffExponentialMultiplier = backoffExponentialMultiplier;
+    }
+
+    public boolean isWriteableStackTrace() {
+        return writeableStackTrace;
+    }
+
+    public void setWriteableStackTrace(boolean writeableStackTrace) {
+        this.writeableStackTrace = writeableStackTrace;
     }
 }
