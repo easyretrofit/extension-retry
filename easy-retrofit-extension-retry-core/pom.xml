@@ -11,12 +11,12 @@
 
     <artifactId>extension-retry-core</artifactId>
 
-    <url>https://github.com/easyretrofit/${extension.name}/${project.artifactId}</url>
+    <url>https://github.com/easyretrofit/${extension.name}/easy-retrofit-${project.artifactId}</url>
 
     <scm>
-        <url>https://github.com/easyretrofit/${extension.name}/${project.artifactId}</url>
-        <connection>scm:git:git://github.com/easyretrofit/${extension.name}/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:ssh://github.com/easyretrofit/${extension.name}/${project.artifactId}.git</developerConnection>
+        <url>https://github.com/easyretrofit/${extension.name}/easy-retrofit-${project.artifactId}</url>
+        <connection>scm:git:git://github.com/easyretrofit/${extension.name}/easy-retrofit-${project.artifactId}.git</connection>
+        <developerConnection>scm:git:ssh://github.com/easyretrofit/${extension.name}/easy-retrofit-${project.artifactId}.git</developerConnection>
     </scm>
 
     <properties>

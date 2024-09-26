@@ -16,12 +16,12 @@
         the parent pom.xml of easy-retrofit-extension-retryHandler
     </description>
 
-    <url>https://github.com/easyretrofit/${project.artifactId}</url>
+    <url>https://github.com/easyretrofit/${extension.name}</url>
 
     <scm>
-        <url>https://github.com/easyretrofit/${project.artifactId}</url>
-        <connection>scm:git:git://github.com/easyretrofit/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:ssh://github.com/easyretrofit/${project.artifactId}.git</developerConnection>
+        <url>https://github.com/easyretrofit/${extension.name}</url>
+        <connection>scm:git:git://github.com/easyretrofit/${extension.name}.git</connection>
+        <developerConnection>scm:git:ssh://github.com/easyretrofit/${extension.name}.git</developerConnection>
     </scm>
 
     <modules>
