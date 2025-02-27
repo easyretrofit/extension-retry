@@ -30,7 +30,7 @@ public class RetryHandler implements Interceptor {
     }
 
     @Override
-    public Response intercept(Chain chain) {
+    public Response intercept(Chain chain) throws RetryException {
         Request request = chain.request();
         while (true) {
             Response response;
