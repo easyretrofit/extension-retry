@@ -12,6 +12,4 @@ public @interface Retry {
     String resourceName();
 
     Class<? extends BaseRetryConfig> config() default BaseRetryConfig.class;
-
-    String fallbackMethod() default "";
 }
