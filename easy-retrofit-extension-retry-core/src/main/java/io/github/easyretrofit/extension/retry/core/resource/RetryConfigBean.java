@@ -2,17 +2,7 @@ package io.github.easyretrofit.extension.retry.core.resource;
 
 public class RetryConfigBean extends CustomizedRetryConfig {
     private String resourceName;
-    private String fallBackMethodName;
     private Class<?> configClazz;
-
-
-    public String getFallBackMethodName() {
-        return fallBackMethodName;
-    }
-
-    public void setFallBackMethodName(String fallBackMethodName) {
-        this.fallBackMethodName = fallBackMethodName;
-    }
 
     public Class<?> getConfigClazz() {
         return configClazz;

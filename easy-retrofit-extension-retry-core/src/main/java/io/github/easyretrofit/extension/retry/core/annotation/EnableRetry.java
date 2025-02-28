@@ -13,7 +13,5 @@ import java.lang.annotation.*;
 @RetrofitInterceptor(handler = RetryInterceptor.class)
 public @interface EnableRetry {
 
-//    Class<? extends BaseFallBack> fallback() default BaseFallBack.class;
-
     RetrofitInterceptorParam extensions() default @RetrofitInterceptorParam();
 }

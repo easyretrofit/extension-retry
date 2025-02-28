@@ -6,12 +6,9 @@ public class FallBackBean {
     private String type;
     private String defaultResourceName;
     private String resourceName;
-    private String fallBackMethodName;
 
-    public FallBackBean(String resourceName, String fallBackMethodName, RetryConfigBean retryConfigBean) {
+    public FallBackBean(String resourceName, RetryConfigBean retryConfigBean) {
         this.resourceName = resourceName;
-        this.fallBackMethodName = fallBackMethodName;
-
     }
 
     public long getId() {
@@ -44,13 +41,5 @@ public class FallBackBean {
 
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
-    }
-
-    public String getFallBackMethodName() {
-        return fallBackMethodName;
-    }
-
-    public void setFallBackMethodName(String fallBackMethodName) {
-        this.fallBackMethodName = fallBackMethodName;
     }
 }

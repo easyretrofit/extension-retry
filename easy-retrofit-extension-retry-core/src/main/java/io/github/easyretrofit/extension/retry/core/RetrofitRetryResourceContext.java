@@ -41,25 +41,7 @@ public class RetrofitRetryResourceContext {
         return fallBackBeans;
     }
 
-    public FallBackBean getFallBackBean(String resourceName) {
-        return fallBackBeanMap.get(resourceName).stream()
-                .filter(fallBackBean -> StringUtils.isNotEmpty(fallBackBean.getFallBackMethodName()))
-                .findFirst().orElse(null);
-    }
-
     public void addRetryConfig(RetryConfig retryConfig) {
         retryConfigHashMap.put(retryConfig.getResourceName(), retryConfig);
-    }
-
-    /**
-     * check retry resource context when running time
-     */
-    public void check() {
-        fallBackBeanMap.forEach((resourceName, fallBackBeans) -> {
-            long fallBackMethodCount = fallBackBeans.stream().filter(fallBackBean -> StringUtils.isNotEmpty(fallBackBean.getFallBackMethodName())).count();
-            if (fallBackMethodCount > 1) {
-                throw new RuntimeException("resourceName:" + resourceName + " has more than one fallBackMethodName");
-            }
-        });
     }
 }

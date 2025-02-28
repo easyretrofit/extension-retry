@@ -49,7 +49,6 @@ public class RetryConfigCustomizeProcessor {
         }
 
         retryConfigBean.setResourceName(annotation.resourceName());
-        retryConfigBean.setFallBackMethodName(annotation.fallbackMethod());
         retryConfigBean.setConfigClazz(configClazz);
         return retryConfigBean;
     }

@@ -1,11 +1,10 @@
 package io.github.easyretrofit.extension.retry.core;
 
-//import io.github.easyretrofit.core.exception.RetrofitExtensionException;
-import io.github.easyretrofit.core.exception.RetrofitInterceptorException;
+import io.github.easyretrofit.core.exception.RetrofitRuntimeException;
 import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
 import okhttp3.Request;
 
-public class RetryException extends RetrofitInterceptorException {
+public class RetryException extends RetrofitRuntimeException {
 
     protected String retryResourceName;
 

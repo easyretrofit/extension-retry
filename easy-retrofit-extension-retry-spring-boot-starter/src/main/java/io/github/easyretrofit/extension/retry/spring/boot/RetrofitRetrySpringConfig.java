@@ -34,9 +34,7 @@ public class RetrofitRetrySpringConfig implements ApplicationContextAware {
                 applicationContext.getBean(RetrofitResourceContext.class),
                 new SpringCDIBeanManager(applicationContext),
                 properties);
-        RetrofitRetryResourceContext context = processor.generateRetryResourceContext();
-        context.check();
-        return context;
+        return processor.generateRetryResourceContext();
     }
 
     @Bean
@@ -45,10 +43,4 @@ public class RetrofitRetrySpringConfig implements ApplicationContextAware {
         RetrofitResourceContext context = applicationContext.getBean(RetrofitResourceContext.class);
         return new RetryInterceptor(context, retrofitRetryResourceContext(properties));
     }
-
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public RetryExceptionFallBackHandler exceptionFallBackHandler() {
-//        return new RetryExceptionFallBackHandler(RetryException.class, new SpringCDIBeanManager(applicationContext));
-//    }
 }
