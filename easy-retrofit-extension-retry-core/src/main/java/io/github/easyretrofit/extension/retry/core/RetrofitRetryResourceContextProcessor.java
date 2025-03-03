@@ -87,7 +87,7 @@ public class RetrofitRetryResourceContextProcessor {
     private void setToRetryResourceContext(Set<RetryConfigBean> retryConfigBeans) {
         for (RetryConfigBean retryConfigBean : retryConfigBeans) {
             if (retryConfigBean != null) {
-                retryResourceContext.addFallBackBean(retryConfigBean.getResourceName(), new FallBackBean(retryConfigBean.getResourceName(), retryConfigBean.getFallBackMethodName(), retryConfigBean));
+                retryResourceContext.addFallBackBean(retryConfigBean.getResourceName(), new FallBackBean(retryConfigBean.getResourceName(), retryConfigBean));
                 RetryConfig.Builder builder = RetryConfig.custom();
                 builder.resourceName(retryConfigBean.getResourceName());
                 if (retryConfigBean.getMaxRetries() != null && retryConfigBean.getMaxRetries().isPresent()) {

@@ -1,7 +1,5 @@
 package io.github.easyretrofit.extension.retry.core.interceptor;
 
-import io.github.easyretrofit.core.RetrofitResourceContextLog;
-import io.github.easyretrofit.core.extension.InterceptorUtils;
 import io.github.easyretrofit.core.resource.RetrofitApiInterfaceBean;
 import io.github.easyretrofit.extension.retry.core.RetryException;
 import io.github.easyretrofit.extension.retry.core.resource.RetryConfig;
@@ -30,7 +28,7 @@ public class RetryHandler implements Interceptor {
     }
 
     @Override
-    public Response intercept(Chain chain) {
+    public Response intercept(Chain chain) throws RetryException {
         Request request = chain.request();
         while (true) {
             Response response;

@@ -5,13 +5,13 @@
     <parent>
         <groupId>io.github.easyretrofit</groupId>
         <artifactId>parent</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.1</version>
     </parent>
 
     <packaging>pom</packaging>
 
     <artifactId>extension-retry-parent</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>
         the parent pom.xml of easy-retrofit-extension-retryHandler
     </description>
@@ -36,19 +36,23 @@
         <java.source.version>${java.version}</java.source.version>
         <java.target.version>${java.version}</java.target.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <easy.retrofit.core.version>1.1.2</easy.retrofit.core.version>
+        <easy.retrofit.core.version>1.2.0</easy.retrofit.core.version>
         <extension.name>extension-retry</extension.name>
         <junit.version>4.13.2</junit.version>
         <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
-    <dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.easyretrofit</groupId>
+                <artifactId>core</artifactId>
+                <version>${easy.retrofit.core.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-        <dependency>
-            <groupId>io.github.easyretrofit</groupId>
-            <artifactId>core</artifactId>
-            <version>${easy.retrofit.core.version}</version>
-        </dependency>
+    <dependencies>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -67,26 +71,5 @@
 
 
     </dependencies>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.sonatype.central</groupId>-->
-<!--                <artifactId>central-publishing-maven-plugin</artifactId>-->
-<!--                <version>0.5.0</version>-->
-<!--                <extensions>true</extensions>-->
-<!--                <configuration>-->
-<!--                    <publishingServerId>central</publishingServerId>-->
-<!--                    <autoPublish>true</autoPublish>-->
-<!--                    <waitUntil>validated</waitUntil>-->
-<!--                    <excludeArtifacts>-->
-<!--                        <excludeArtifact>spring-boot-integration-tests</excludeArtifact>-->
-<!--                        <excludeArtifact>single-instance-integration-test</excludeArtifact>-->
-<!--                        <excludeArtifact>inherit-integration-test</excludeArtifact>-->
-<!--                    </excludeArtifacts>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
 
 </project>

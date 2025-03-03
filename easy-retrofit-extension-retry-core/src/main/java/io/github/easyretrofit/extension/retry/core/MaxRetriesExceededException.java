@@ -17,7 +17,7 @@ public class MaxRetriesExceededException extends RetryException {
      *
      * @param retryHandler the Retry which failed
      */
-    public static MaxRetriesExceededException createMaxRetriesExceededException(RetryHandler retryHandler, RetrofitApiInterfaceBean retrofitApiInterfaceBean, Request request, String retryResourceName) {
+    public static MaxRetriesExceededException createMaxRetriesExceededException(RetryHandler retryHandler, RetrofitApiInterfaceBean retrofitApiInterfaceBean, Request request, String retryResourceName) throws MaxRetriesExceededException {
         boolean writeStackTrace = retryHandler.getConfig().isWriteableStackTrace();
         String resourceName = retryHandler.getConfig().getResourceName();
         String message = String.format(
